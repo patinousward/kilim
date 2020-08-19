@@ -335,6 +335,7 @@ public abstract class Task<TT> implements Runnable, EventSubscriber, Fiber.Worke
                                                                            IllegalAccessException,
                                                                            IllegalArgumentException,
                                                                            InvocationTargetException {
+        //只是反射调用一个pausable method
         Fiber f = getCurrentTask().fiber;
         Object[] fargs;
         if (f.pc == 0) {

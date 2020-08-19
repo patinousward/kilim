@@ -219,7 +219,7 @@ public final class Fiber {
         int d = ++iStack;
         if (d >= stateStack.length) {
 //            System.out.println("size == " + d);
-            ensureSize(d * 2);
+            ensureSize(d * 2);//扩容
             pc = 0;
             curState = null;
         } else {
