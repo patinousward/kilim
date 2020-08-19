@@ -99,6 +99,7 @@ public class MethodWeaver {
         String sig = mf.signature;
         int access = mf.access;
         if (mf.isPausable()) {
+            //核心方法，应该是给方法拓展个参数Fiber
             access &= ~Opcodes.ACC_VARARGS;
             if (!isSAM) {
                 desc = desc.replace(")", D_FIBER_LAST_ARG);
@@ -110,6 +111,7 @@ public class MethodWeaver {
 
         if (!mf.isAbstract()) {
             if (mf.needsWeaving()) {
+                //核心方法
                 accept(mv);
             } else {
                 mf.accept(mv);

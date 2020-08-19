@@ -76,7 +76,9 @@ public class Weaver {
      * @see #weave(List) for run-time weaving.
      */
     public static void main(String[] args) throws IOException {
+        //maven 打包编译时的入口
         ArrayList<String> names = parseArgs(args);
+        //核心方法
         doMain(names.toArray(new String [] {}),null);
         if (err > 0) System.exit(err);
     }
@@ -108,6 +110,7 @@ public class Weaver {
                     if (exclude(name))
                         continue;
                     currentName = name;
+                    //核心方法
                     weaver.weaveFile(name, new BufferedInputStream(new FileInputStream(name)));
                 } else if (name.endsWith(".jar")) {
                     for (FileLister.Entry fe : new FileLister(name)) {
@@ -171,6 +174,7 @@ public class Weaver {
     public void weaveFile(String name, InputStream is) throws IOException {
         try {
             ClassWeaver cw = new ClassWeaver(context,is);
+            //核心方法
             cw.weave();
             writeClasses(cw);
         } catch (KilimException ke) {

@@ -72,7 +72,7 @@ public class ClassWeaver {
             boolean computeFrames = (classFlow.version & 0x00FF) >= 50;
             ClassWriter cw = new kilim.analysis.ClassWriter(
                     computeFrames ? ClassWriter.COMPUTE_FRAMES : 0, context.detector);
-            accept(cw);
+            accept(cw);//核心方法
             addClassInfo(new ClassInfo(classFlow.getClassName(), cw.toByteArray()));
         }
     }
@@ -149,9 +149,10 @@ public class ClassWeaver {
                 
                 boolean isSAM = (sam == m);
                 MethodWeaver mw = new MethodWeaver(this, context.detector, m, isSAM);
+                //核心方法
                 mw.accept(cv);
                 if (m.isPausable())
-                    mw.makeNotWovenMethod(cv, m, isSAM);
+                    mw.makeNotWovenMethod(cv, m, isSAM);//不允许再修改
             } else {
                 m.restoreNonInstructionNodes();
                 m.accept(cv);
